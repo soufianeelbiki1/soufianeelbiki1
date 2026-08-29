@@ -38,7 +38,7 @@ Next high-value slices: timeout and late-response classification, duplicate wind
 
 The repository has a deterministic retrieval contract and typed query/evidence models. CI and contract tests cover dependency consistency, Ruff lint/format, compilation, retrieval ranking behavior, and Pydantic bounds.
 
-Next high-value slices: ingestion/chunking contracts, retrieval evaluation metrics, then hybrid retrieval/reranking before adding heavier infrastructure.
+The first evaluation slice is now merged: a deterministic evaluator reports precision@k, recall@k, and MRR, rejects empty datasets, and is covered by CI. Next high-value slices: ingestion/chunking contracts, then hybrid retrieval/reranking before adding heavier infrastructure.
 
 ### Portfolio
 
