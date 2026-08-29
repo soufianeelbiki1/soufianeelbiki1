@@ -9,10 +9,10 @@ I build systems where correctness, explicit failure handling, observability, and
 | Project | Role in the portfolio | Engineering direction |
 |---|---|---|
 | [AtlasPay](https://github.com/soufianeelbiki1/AtlasPay) | Payments & distributed-systems flagship | ISO 8583/EMV/ISO 20022 interoperability, correlation/routing, durable idempotency, double-entry ledger, outbox/eventing, replay, reconciliation, observability and failure testing |
-| [Nexus](https://github.com/soufianeelbiki1/Nexus) | AtlasPay operator/control plane | Next.js/TypeScript operational UI for transaction flows, issuer latency, auth rates, reversals, ledger/reconciliation, Kafka lag, incidents, topology and diagnostics |
+| [Nexus](https://github.com/soufianeelbiki1/Nexus) | AtlasPay operator/control plane | Operational UI for transaction flows, issuer latency, auth rates, reversals, ledger/reconciliation, event lag, incidents, topology and diagnostics |
 | [AtlasRAG](https://github.com/soufianeelbiki1/AtlasRAG) | Production AI/LLM system | Ingestion, hybrid retrieval, reranking, evaluation datasets, groundedness metrics, provider abstraction, tracing, cost/latency, tenancy, jobs and security |
-| [ForecastLab](https://github.com/soufianeelbiki1/ForecastLab) | Applied CV/ML flagship in transition | ICAO-style passport-photo compliance signals, pose/quality/illumination/background checks, segmentation, explainable rule scores, evaluation/versioning and FastAPI inference |
-| [portfolio](https://github.com/soufianeelbiki1/portfolio) | Public product surface | Architecture stories, verified demos, engineering trade-offs and synchronized project links |
+| [ForecastLab](https://github.com/soufianeelbiki1/ForecastLab) | Applied ML flagship in transition | Reproducible data/model lifecycle, explainable evaluation, versioned experiments and deployable inference |
+| [portfolio](https://github.com/soufianeelbiki1/portfolio) | Public product surface | Architecture stories, role-specific hiring lenses, verified engineering evidence and synchronized project links |
 
 ## Engineering principles
 
@@ -28,24 +28,42 @@ I build systems where correctness, explicit failure handling, observability, and
 
 ### AtlasPay
 
-The strict ISO 8583 message-body codec is now merged to `main`, including primary/secondary bitmaps, fixed and LLVAR/LLLVAR fields, binary DE55 support, malformed-input tests, Hypothesis round-trip coverage, stronger CI checks, and an ADR defining at-least-once/idempotent delivery semantics and external failure boundaries.
+The strict ISO 8583 message-body codec is merged to `main`, including primary/secondary bitmaps, fixed and LLVAR/LLLVAR fields, binary DE55 support, malformed-input tests, Hypothesis round-trip coverage, and CI quality gates.
 
-Next high-value slices: durable persistence/idempotency, payment state/correlation, timeout and late-response handling, reversals, then ledger/outbox foundations.
+The next switch-architecture slice is also merged: AtlasPay now has a protocol-independent canonical authorization model, explicit ISO 8583 ↔ canonical mapping for the supported purchase profile, numeric/alpha currency mapping, and response correlation using expected MTI plus the STAN/RRN pair. The mapping fails closed when required fields, field widths, processing codes, or currencies are unsupported.
+
+Next high-value slices: timeout and late-response classification, duplicate windows, reversal linkage, durable persistence/idempotency, then ledger/outbox foundations.
 
 ### AtlasRAG
 
-The repository has a deterministic retrieval contract and typed query/evidence models. CI and contract tests now cover Python 3.11/3.12, dependency consistency, Ruff lint/format, compilation, retrieval ranking behavior, and Pydantic bounds.
+The repository has a deterministic retrieval contract and typed query/evidence models. CI and contract tests cover dependency consistency, Ruff lint/format, compilation, retrieval ranking behavior, and Pydantic bounds.
 
 Next high-value slices: ingestion/chunking contracts, retrieval evaluation metrics, then hybrid retrieval/reranking before adding heavier infrastructure.
 
-### Nexus, ForecastLab and portfolio
+### Portfolio
 
-These remain early-stage and will be advanced in rotation after their foundations, CI and truthful transition/product documentation are established. Deployment links will appear only after successful, verifiable deployments.
+The portfolio repository now contains a responsive, dependency-free engineering case-study site instead of an empty placeholder. It presents the same projects through payments, backend, distributed-systems, AI, platform/SRE, and ML hiring lenses while explicitly labeling early-stage work.
+
+Its CI contract checks required case-study sections, flagship repository links, local assets, truthful early-stage status labels, and placeholder/unverified demo links. A public deployment is **not** claimed yet; a live URL will be added only after deployment is verified.
+
+### Nexus and ForecastLab
+
+These remain early-stage and will be advanced in rotation after their foundations, CI, and truthful transition/product documentation are established. Nexus will follow meaningful AtlasPay operational data rather than inventing a decorative control plane. ForecastLab will be rebuilt around a measurable ML lifecycle rather than notebook-only work.
+
+## Role lenses
+
+- **Payments / FinTech:** AtlasPay → Nexus → AtlasRAG
+- **Backend:** AtlasPay → Nexus → AtlasRAG
+- **Distributed Systems:** AtlasPay → Nexus → AtlasRAG
+- **Platform / SRE:** Nexus + AtlasPay operational architecture
+- **AI / LLM:** AtlasRAG → AtlasPay engineering discipline
+- **ML:** ForecastLab → AtlasRAG → AtlasPay
 
 ## Build order
 
 1. Deepen AtlasPay vertically into the flagship payments platform.
-2. Build Nexus once AtlasPay exposes meaningful operational data and diagnostics.
+2. Keep the portfolio and profile synchronized with merged, verifiable work.
 3. Advance AtlasRAG evaluation-first toward production retrieval and LLM operations.
-4. Rebuild ForecastLab around explainable passport-photo compliance CV/ML.
-5. Keep this profile and the portfolio synchronized with shipped, verifiable work.
+4. Build Nexus once AtlasPay exposes meaningful operational data and diagnostics.
+5. Rebuild ForecastLab around a reproducible, explainable ML lifecycle.
+6. Add deployment links only after successful, verifiable deployments.
