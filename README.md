@@ -38,7 +38,7 @@ A transport-independent network coordinator makes accepted, timeout, late-respon
 
 AtlasRAG has a deterministic lexical retriever plus precision@k, recall@k and MRR evaluation primitives. A citation-first application service filters weak evidence, abstains when support is insufficient, and exposes a credential-free FastAPI reference query path through a provider/generator boundary.
 
-Deterministic ingestion identity is also merged: normalized SHA-256 document fingerprints, stable content-derived chunk IDs, exact replay semantics and explicit document-ID conflicts. Durable PostgreSQL document/chunk persistence is the next reliability step before production-grade ingestion is claimed.
+Deterministic ingestion identity is also merged: normalized SHA-256 document fingerprints, stable content-derived chunk IDs, exact replay semantics and explicit document-ID conflicts. Durable PostgreSQL document/chunk persistence with unique constraints, transaction-scoped advisory locking, replay reconstruction, and explicit content conflicts is now merged; no multi-tenant or vector-search claim is implied.
 
 ### Nexus
 
@@ -69,7 +69,7 @@ The portfolio case-study site is synchronized with these verified boundaries. CI
 
 1. Keep deepening AtlasPay while preserving explicit payment/network failure boundaries.
 2. Keep the portfolio and profile synchronized with merged, verifiable work.
-3. Move AtlasRAG ingestion from deterministic reference semantics to durable PostgreSQL persistence, then hybrid retrieval/reranking.
+3. Advance AtlasRAG from durable ingestion to hybrid retrieval/reranking and a groundedness regression dataset.
 4. Move Nexus from fixture-backed contracts to runtime-validated AtlasPay schemas and verified data endpoints.
 5. Move ForecastLab from estimator interfaces to labeled quality rules, held-out evaluation adapters and explainable inference.
 6. Add deployment links only after successful, verifiable deployments.
