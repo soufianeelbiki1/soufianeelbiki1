@@ -32,25 +32,25 @@ AtlasPay now includes a strict ISO 8583 codec and canonical authorization mappin
 
 Domain events are persisted through a transactional outbox. The reference publisher is explicitly **at least once**, consumers can deduplicate durably, failed deliveries retain retry/error state, and poison messages are not silently discarded. Deterministic reconciliation reports cross-check payments, operations, journals, entries and outbox linkage; replay controls are bounded and do not silently rewrite accounting history.
 
-A transport-independent network coordinator makes accepted, timeout, late-response, duplicate and correlation-mismatch outcomes explicit. Issuer/acquirer routing and one-to-one reversal correlation are merged with deterministic specificity and ambiguity handling. Strict DE55 BER-TLV parsing, constructed-template recursion, duplicate preservation, EMV tag metadata and five-byte TVR decoding are also merged. A byte-oriented transport port and ISO 8583 network adapter now separate message encoding from sockets/TLS/framing; response, timeout, and local transport failure are distinct, and timeout explicitly preserves unknown external-delivery status. Next high-value work is issuer timeout/reversal integration across routing, transport, and the coordinator.
+A transport-independent network coordinator makes accepted, timeout, late-response, duplicate and correlation-mismatch outcomes explicit. Issuer/acquirer routing and one-to-one reversal correlation are merged with deterministic specificity and ambiguity handling. Strict DE55 BER-TLV parsing, constructed-template recursion, duplicate preservation, EMV tag metadata and five-byte TVR decoding are also merged. A byte-oriented transport port and ISO 8583 network adapter now separate message encoding from sockets/TLS/framing; response, timeout, and local transport failure are distinct, and timeout explicitly preserves unknown external-delivery status. The merged authorization network flow now enforces canonical/wire STAN-RRN equality, routes before registration, links a timeout-triggered reversal without claiming delivery, classifies a later original response as late, and permits correlation reuse only after a known-local transport failure. A scoped ISO 8583 → canonical → ISO 20022 authorization projection is also merged, with explicit STAN/DE55 loss reporting and fail-closed RRN bridge constraints. It deliberately does not claim XML/XSD, card-scheme, or generic ISO 20022 wire conformance.
 
 ### AtlasRAG
 
 AtlasRAG has a deterministic lexical retriever plus precision@k, recall@k and MRR evaluation primitives. A citation-first application service filters weak evidence, abstains when support is insufficient, and exposes a credential-free FastAPI reference query path through a provider/generator boundary.
 
-Deterministic ingestion identity is also merged: normalized SHA-256 document fingerprints, stable content-derived chunk IDs, exact replay semantics and explicit document-ID conflicts. Durable PostgreSQL document/chunk persistence with unique constraints, transaction-scoped advisory locking, replay reconstruction, and explicit content conflicts is now merged; no multi-tenant or vector-search claim is implied.
+Deterministic ingestion identity is also merged: normalized SHA-256 document fingerprints, stable content-derived chunk IDs, exact replay semantics and explicit document-ID conflicts. Durable PostgreSQL document/chunk persistence with unique constraints, transaction-scoped advisory locking, replay reconstruction, and explicit content conflicts is now merged. Hybrid retrieval orchestration is also merged: reciprocal-rank fusion combines heterogeneous retriever ports without comparing uncalibrated raw backend scores, and reranking sits behind a separate contract. A measured semantic/vector adapter is still not claimed.
 
 ### Nexus
 
 Nexus is no longer a placeholder. It is a strict Next.js/React/TypeScript operator application with typed AtlasPay operational contracts, source provenance, explicit ready/stale/partial/unavailable loading states, runtime snapshot validation, and a hard rule that invalid or unavailable source integrity renders no telemetry values.
 
-The operator view includes authorization/outbox/ledger summaries, issuer-route health, incidents and transaction-level STAN/RRN drill-down with coordinator disposition, latency availability and linked reversal correlation/reason. The current source is deliberately fixture-backed rather than advertised as live telemetry.
+The operator view includes authorization/outbox/ledger summaries, issuer-route health, incidents and transaction-level STAN/RRN drill-down with coordinator disposition, latency availability and linked reversal correlation/reason. Search/outcome filtering and read-only reconciliation/outbox checks are merged with explicit no-auto-repair/no-poison-discard guidance. The current source is deliberately fixture-backed rather than advertised as live telemetry.
 
 ### ForecastLab
 
 ForecastLab now has an explainable passport-photo compliance policy over measured observations for dimensions, face count, head pose, background uniformity and occlusion. Thresholds are versionable, evidence is returned per rule, and invalid measurement ranges fail explicitly.
 
-A versioned synthetic observation dataset provides fixed train/validation/test-style regression splits with no photographs or personal identity data. Rule-level confusion counts, precision, recall and accuracy are implemented. Privacy-conscious estimator interfaces and an observation pipeline for pose/background/occlusion plus quality signals are merged with deterministic doubles and integration tests. A separate versioned quality policy now evaluates normalized blur, compression, illumination and shadow scores with explainable thresholds and synthetic rule-level regression metrics; no real-world computer-vision accuracy or certification is claimed.
+A versioned synthetic observation dataset provides fixed train/validation/test-style regression splits with no photographs or personal identity data. Rule-level confusion counts, precision, recall and accuracy are implemented. Privacy-conscious estimator interfaces and an observation pipeline for pose/background/occlusion plus quality signals are merged with deterministic doubles and integration tests. A separate versioned quality policy now evaluates normalized blur, compression, illumination and shadow scores with explainable thresholds and synthetic rule-level regression metrics. A FastAPI precomputed-signal endpoint returns combined geometric/quality rule evidence plus policy and estimator version metadata; it explicitly does not decode raw photos. No real-world computer-vision accuracy or certification is claimed.
 
 ### Portfolio
 
@@ -69,7 +69,7 @@ The portfolio case-study site is synchronized with these verified boundaries. CI
 
 1. Keep deepening AtlasPay while preserving explicit payment/network failure boundaries.
 2. Keep the portfolio and profile synchronized with merged, verifiable work.
-3. Advance AtlasRAG from durable ingestion to hybrid retrieval/reranking and a groundedness regression dataset.
-4. Move Nexus from fixture-backed contracts to runtime-validated AtlasPay schemas and verified data endpoints.
-5. Move ForecastLab from synthetic quality-policy validation to held-out evaluation adapters and explainable inference.
+3. Advance AtlasRAG from hybrid orchestration to a regression dataset and measured semantic/vector retrieval adapter.
+4. Move Nexus from fixture-backed validated workflows to a verified AtlasPay data endpoint.
+5. Move ForecastLab from signal-only inference to held-out evaluation adapters and raw-image inference behind versioned estimators.
 6. Add deployment links only after successful, verifiable deployments.
