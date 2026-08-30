@@ -6,13 +6,13 @@ I build systems where correctness, explicit failure handling, observability, and
 
 ## Flagship systems
 
-| Project | Role in the portfolio | Engineering direction |
+| Project | Role in the portfolio | Verified direction |
 |---|---|---|
-| [AtlasPay](https://github.com/soufianeelbiki1/AtlasPay) | Payments & distributed-systems flagship | ISO 8583/EMV/ISO 20022 interoperability, correlation/routing, durable idempotency, double-entry ledger, outbox/eventing, replay, reconciliation, observability and failure testing |
-| [Nexus](https://github.com/soufianeelbiki1/Nexus) | AtlasPay operator/control plane | Operational UI for transaction flows, issuer latency, auth rates, reversals, ledger/reconciliation, event lag, incidents, topology and diagnostics |
-| [AtlasRAG](https://github.com/soufianeelbiki1/AtlasRAG) | Production AI/LLM system | Ingestion, hybrid retrieval, reranking, evaluation datasets, groundedness metrics, provider abstraction, tracing, cost/latency, tenancy, jobs and security |
-| [ForecastLab](https://github.com/soufianeelbiki1/ForecastLab) | Applied ML flagship in transition | Reproducible data/model lifecycle, explainable evaluation, versioned experiments and deployable inference |
-| [portfolio](https://github.com/soufianeelbiki1/portfolio) | Public product surface | Architecture stories, role-specific hiring lenses, verified engineering evidence and synchronized project links |
+| [AtlasPay](https://github.com/soufianeelbiki1/AtlasPay) | Payments & distributed-systems flagship | ISO 8583/canonical interoperability, issuer/acquirer routing, reversal correlation, durable idempotency, atomic double-entry ledger flows, transactional outbox, reconciliation/replay, and explicit network failure semantics |
+| [Nexus](https://github.com/soufianeelbiki1/Nexus) | AtlasPay operator/control plane | Typed provenance-aware operational snapshots, degraded-source handling, issuer health, incidents, STAN/RRN transaction drill-down and reversal correlation |
+| [AtlasRAG](https://github.com/soufianeelbiki1/AtlasRAG) | Production AI/LLM system | Deterministic retrieval/evaluation, citation-first query service, weak-evidence abstention, provider boundary, and replay-safe deterministic ingestion identity |
+| [ForecastLab](https://github.com/soufianeelbiki1/ForecastLab) | Applied ML flagship | Explainable passport-photo compliance policy, synthetic evaluation data, rule-level metrics, and privacy-conscious estimator boundaries |
+| [portfolio](https://github.com/soufianeelbiki1/portfolio) | Public product surface | Architecture stories, hiring lenses, verified engineering evidence and synchronized truth boundaries |
 
 ## Engineering principles
 
@@ -22,33 +22,39 @@ I build systems where correctness, explicit failure handling, observability, and
 - Treat timeouts, retries, duplicates, reversals, reconciliation and replay as first-class behavior.
 - Never imply vague “exactly once” behavior across external boundaries; state the actual semantics and failure boundaries.
 - Back claims with tests, CI, metrics, load/fault experiments, datasets or ADRs.
-- Never publish fake scale, fake production traffic or unverified live URLs.
+- Never publish fake scale, fake production traffic, fabricated live telemetry, model accuracy without held-out evidence, or unverified live URLs.
 
 ## Current verified progress
 
 ### AtlasPay
 
-The strict ISO 8583 message-body codec is merged to `main`, including primary/secondary bitmaps, fixed and LLVAR/LLLVAR fields, binary DE55 support, malformed-input tests, Hypothesis round-trip coverage, and CI quality gates.
+AtlasPay now includes a strict ISO 8583 codec and canonical authorization mapping, durable PostgreSQL request and business-operation idempotency, an append-only balanced double-entry ledger, and capture/refund/reversal operations that commit business state and ledger journals atomically.
 
-The next switch-architecture slice is also merged: AtlasPay now has a protocol-independent canonical authorization model, explicit ISO 8583 ↔ canonical mapping for the supported purchase profile, numeric/alpha currency mapping, and response correlation using expected MTI plus the STAN/RRN pair. The mapping fails closed when required fields, field widths, processing codes, or currencies are unsupported.
+Domain events are persisted through a transactional outbox. The reference publisher is explicitly **at least once**, consumers can deduplicate durably, failed deliveries retain retry/error state, and poison messages are not silently discarded. Deterministic reconciliation reports cross-check payments, operations, journals, entries and outbox linkage; replay controls are bounded and do not silently rewrite accounting history.
 
-The next network-behavior slice is now merged: a transport-independent coordinator makes timeout, late-response, duplicate, and mismatched-response outcomes explicit with deterministic tests. Next high-value slices: issuer/acquirer routing, reversal linkage, and expanded EMV/DE55 support.
+A transport-independent network coordinator makes accepted, timeout, late-response, duplicate and correlation-mismatch outcomes explicit. Issuer/acquirer routing and one-to-one reversal correlation are merged with deterministic specificity and ambiguity handling. Strict DE55 BER-TLV parsing, constructed-template recursion, duplicate preservation, EMV tag metadata and five-byte TVR decoding are also merged. Next high-value work is explicit transport adapters plus timeout/reversal integration tests that preserve external-delivery failure boundaries.
 
 ### AtlasRAG
 
-The repository has a deterministic retrieval contract and typed query/evidence models. CI and contract tests cover dependency consistency, Ruff lint/format, compilation, retrieval ranking behavior, and Pydantic bounds.
+AtlasRAG has a deterministic lexical retriever plus precision@k, recall@k and MRR evaluation primitives. A citation-first application service filters weak evidence, abstains when support is insufficient, and exposes a credential-free FastAPI reference query path through a provider/generator boundary.
 
-The first evaluation slice is now merged: a deterministic evaluator reports precision@k, recall@k, and MRR, rejects empty datasets, and is covered by CI. Next high-value slices: ingestion/chunking contracts, then hybrid retrieval/reranking before adding heavier infrastructure.
+Deterministic ingestion identity is also merged: normalized SHA-256 document fingerprints, stable content-derived chunk IDs, exact replay semantics and explicit document-ID conflicts. Durable PostgreSQL document/chunk persistence is the next reliability step before production-grade ingestion is claimed.
+
+### Nexus
+
+Nexus is no longer a placeholder. It is a strict Next.js/React/TypeScript operator application with typed AtlasPay operational contracts, source provenance, explicit ready/stale/partial/unavailable loading states, runtime snapshot validation, and a hard rule that invalid or unavailable source integrity renders no telemetry values.
+
+The operator view includes authorization/outbox/ledger summaries, issuer-route health, incidents and transaction-level STAN/RRN drill-down with coordinator disposition, latency availability and linked reversal correlation/reason. The current source is deliberately fixture-backed rather than advertised as live telemetry.
+
+### ForecastLab
+
+ForecastLab now has an explainable passport-photo compliance policy over measured observations for dimensions, face count, head pose, background uniformity and occlusion. Thresholds are versionable, evidence is returned per rule, and invalid measurement ranges fail explicitly.
+
+A versioned synthetic observation dataset provides fixed train/validation/test-style regression splits with no photographs or personal identity data. Rule-level confusion counts, precision, recall and accuracy are implemented. Privacy-conscious estimator interfaces and an observation pipeline for pose/background/occlusion plus quality signals are merged with deterministic doubles and integration tests; no real-world computer-vision accuracy is claimed.
 
 ### Portfolio
 
-The portfolio repository now contains a responsive, dependency-free engineering case-study site instead of an empty placeholder. It presents the same projects through payments, backend, distributed-systems, AI, platform/SRE, and ML hiring lenses while explicitly labeling early-stage work.
-
-Its CI contract checks required case-study sections, flagship repository links, local assets, truthful early-stage status labels, and placeholder/unverified demo links. A public deployment is **not** claimed yet; a live URL will be added only after deployment is verified.
-
-### Nexus and ForecastLab
-
-These remain early-stage and will be advanced in rotation after their foundations, CI, and truthful transition/product documentation are established. Nexus will follow meaningful AtlasPay operational data rather than inventing a decorative control plane. ForecastLab will be rebuilt around a measurable ML lifecycle rather than notebook-only work.
+The portfolio case-study site is synchronized with these verified boundaries. CI checks required sections, flagship links, local assets, truthful status labels and placeholder/unverified links. A public deployment is **not** claimed until a live URL is independently verified.
 
 ## Role lenses
 
@@ -61,9 +67,9 @@ These remain early-stage and will be advanced in rotation after their foundation
 
 ## Build order
 
-1. Deepen AtlasPay vertically into the flagship payments platform.
+1. Keep deepening AtlasPay while preserving explicit payment/network failure boundaries.
 2. Keep the portfolio and profile synchronized with merged, verifiable work.
-3. Advance AtlasRAG evaluation-first toward production retrieval and LLM operations.
-4. Build Nexus once AtlasPay exposes meaningful operational data and diagnostics.
-5. Rebuild ForecastLab around a reproducible, explainable ML lifecycle.
+3. Move AtlasRAG ingestion from deterministic reference semantics to durable PostgreSQL persistence, then hybrid retrieval/reranking.
+4. Move Nexus from fixture-backed contracts to runtime-validated AtlasPay schemas and verified data endpoints.
+5. Move ForecastLab from estimator interfaces to labeled quality rules, held-out evaluation adapters and explainable inference.
 6. Add deployment links only after successful, verifiable deployments.
