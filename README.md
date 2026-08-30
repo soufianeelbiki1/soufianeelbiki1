@@ -8,7 +8,7 @@ I build systems where correctness, explicit failure handling, observability, and
 
 | Project | Role in the portfolio | Verified direction |
 |---|---|---|
-| [AtlasPay](https://github.com/soufianeelbiki1/AtlasPay) | Payments & distributed-systems flagship | ISO 8583/canonical interoperability, durable idempotency, atomic double-entry ledger flows, transactional outbox, reconciliation/replay, and explicit network failure semantics |
+| [AtlasPay](https://github.com/soufianeelbiki1/AtlasPay) | Payments & distributed-systems flagship | ISO 8583/canonical interoperability, issuer/acquirer routing, reversal correlation, durable idempotency, atomic double-entry ledger flows, transactional outbox, reconciliation/replay, and explicit network failure semantics |
 | [Nexus](https://github.com/soufianeelbiki1/Nexus) | AtlasPay operator/control plane | Typed provenance-aware operational snapshots, degraded-source handling, issuer health, incidents, STAN/RRN transaction drill-down and reversal correlation |
 | [AtlasRAG](https://github.com/soufianeelbiki1/AtlasRAG) | Production AI/LLM system | Deterministic retrieval/evaluation, citation-first query service, weak-evidence abstention, provider boundary, and replay-safe deterministic ingestion identity |
 | [ForecastLab](https://github.com/soufianeelbiki1/ForecastLab) | Applied ML flagship | Explainable passport-photo compliance policy, synthetic evaluation data, rule-level metrics, and privacy-conscious estimator boundaries |
@@ -32,7 +32,7 @@ AtlasPay now includes a strict ISO 8583 codec and canonical authorization mappin
 
 Domain events are persisted through a transactional outbox. The reference publisher is explicitly **at least once**, consumers can deduplicate durably, failed deliveries retain retry/error state, and poison messages are not silently discarded. Deterministic reconciliation reports cross-check payments, operations, journals, entries and outbox linkage; replay controls are bounded and do not silently rewrite accounting history.
 
-A transport-independent network coordinator makes accepted, timeout, late-response, duplicate and correlation-mismatch outcomes explicit. Issuer/acquirer routing and one-to-one reversal correlation have a green review branch, but are not described here as merged until GitHub accepts that merge. Next merged-path work remains explicit network adapter boundaries and deeper DE55/EMV parsing.
+A transport-independent network coordinator makes accepted, timeout, late-response, duplicate and correlation-mismatch outcomes explicit. Issuer/acquirer routing and one-to-one reversal correlation are merged with deterministic specificity and ambiguity handling. Next high-value work is deeper DE55 BER-TLV/EMV interpretation, then transport adapters and timeout/reversal integration tests that preserve explicit external delivery semantics.
 
 ### AtlasRAG
 
@@ -50,7 +50,7 @@ The operator view includes authorization/outbox/ledger summaries, issuer-route h
 
 ForecastLab now has an explainable passport-photo compliance policy over measured observations for dimensions, face count, head pose, background uniformity and occlusion. Thresholds are versionable, evidence is returned per rule, and invalid measurement ranges fail explicitly.
 
-A versioned synthetic observation dataset provides fixed train/validation/test-style regression splits with no photographs or personal identity data. Rule-level confusion counts, precision, recall and accuracy are implemented. Estimator-interface work for pose/background/occlusion and quality signals is under review; no real-world computer-vision accuracy is claimed.
+A versioned synthetic observation dataset provides fixed train/validation/test-style regression splits with no photographs or personal identity data. Rule-level confusion counts, precision, recall and accuracy are implemented. Privacy-conscious estimator interfaces and an observation pipeline for pose/background/occlusion plus quality signals are merged with deterministic doubles and integration tests; no real-world computer-vision accuracy is claimed.
 
 ### Portfolio
 
