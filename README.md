@@ -32,7 +32,7 @@ AtlasPay now includes a strict ISO 8583 codec and canonical authorization mappin
 
 Domain events are persisted through a transactional outbox. The reference publisher is explicitly **at least once**, consumers can deduplicate durably, failed deliveries retain retry/error state, and poison messages are not silently discarded. Deterministic reconciliation reports cross-check payments, operations, journals, entries and outbox linkage; replay controls are bounded and do not silently rewrite accounting history.
 
-A transport-independent network coordinator makes accepted, timeout, late-response, duplicate and correlation-mismatch outcomes explicit. Issuer/acquirer routing and one-to-one reversal correlation are merged with deterministic specificity and ambiguity handling. Next high-value work is deeper DE55 BER-TLV/EMV interpretation, then transport adapters and timeout/reversal integration tests that preserve explicit external delivery semantics.
+A transport-independent network coordinator makes accepted, timeout, late-response, duplicate and correlation-mismatch outcomes explicit. Issuer/acquirer routing and one-to-one reversal correlation are merged with deterministic specificity and ambiguity handling. Strict DE55 BER-TLV parsing, constructed-template recursion, duplicate preservation, EMV tag metadata and five-byte TVR decoding are also merged. Next high-value work is explicit transport adapters plus timeout/reversal integration tests that preserve external-delivery failure boundaries.
 
 ### AtlasRAG
 
@@ -42,7 +42,7 @@ Deterministic ingestion identity is also merged: normalized SHA-256 document fin
 
 ### Nexus
 
-Nexus is no longer a placeholder. It is a strict Next.js/React/TypeScript operator application with typed AtlasPay operational contracts, source provenance, explicit ready/stale/partial/unavailable loading states, and a hard rule that unavailable source integrity renders no telemetry values.
+Nexus is no longer a placeholder. It is a strict Next.js/React/TypeScript operator application with typed AtlasPay operational contracts, source provenance, explicit ready/stale/partial/unavailable loading states, runtime snapshot validation, and a hard rule that invalid or unavailable source integrity renders no telemetry values.
 
 The operator view includes authorization/outbox/ledger summaries, issuer-route health, incidents and transaction-level STAN/RRN drill-down with coordinator disposition, latency availability and linked reversal correlation/reason. The current source is deliberately fixture-backed rather than advertised as live telemetry.
 
