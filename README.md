@@ -32,7 +32,7 @@ AtlasPay now includes a strict ISO 8583 codec and canonical authorization mappin
 
 Domain events are persisted through a transactional outbox. The reference publisher is explicitly **at least once**, consumers can deduplicate durably, failed deliveries retain retry/error state, and poison messages are not silently discarded. Deterministic reconciliation reports cross-check payments, operations, journals, entries and outbox linkage; replay controls are bounded and do not silently rewrite accounting history.
 
-A transport-independent network coordinator makes accepted, timeout, late-response, duplicate and correlation-mismatch outcomes explicit. Issuer/acquirer routing and one-to-one reversal correlation are merged with deterministic specificity and ambiguity handling. Strict DE55 BER-TLV parsing, constructed-template recursion, duplicate preservation, EMV tag metadata and five-byte TVR decoding are also merged. Next high-value work is explicit transport adapters plus timeout/reversal integration tests that preserve external-delivery failure boundaries.
+A transport-independent network coordinator makes accepted, timeout, late-response, duplicate and correlation-mismatch outcomes explicit. Issuer/acquirer routing and one-to-one reversal correlation are merged with deterministic specificity and ambiguity handling. Strict DE55 BER-TLV parsing, constructed-template recursion, duplicate preservation, EMV tag metadata and five-byte TVR decoding are also merged. A byte-oriented transport port and ISO 8583 network adapter now separate message encoding from sockets/TLS/framing; response, timeout, and local transport failure are distinct, and timeout explicitly preserves unknown external-delivery status. Next high-value work is issuer timeout/reversal integration across routing, transport, and the coordinator.
 
 ### AtlasRAG
 
@@ -50,7 +50,7 @@ The operator view includes authorization/outbox/ledger summaries, issuer-route h
 
 ForecastLab now has an explainable passport-photo compliance policy over measured observations for dimensions, face count, head pose, background uniformity and occlusion. Thresholds are versionable, evidence is returned per rule, and invalid measurement ranges fail explicitly.
 
-A versioned synthetic observation dataset provides fixed train/validation/test-style regression splits with no photographs or personal identity data. Rule-level confusion counts, precision, recall and accuracy are implemented. Privacy-conscious estimator interfaces and an observation pipeline for pose/background/occlusion plus quality signals are merged with deterministic doubles and integration tests; no real-world computer-vision accuracy is claimed.
+A versioned synthetic observation dataset provides fixed train/validation/test-style regression splits with no photographs or personal identity data. Rule-level confusion counts, precision, recall and accuracy are implemented. Privacy-conscious estimator interfaces and an observation pipeline for pose/background/occlusion plus quality signals are merged with deterministic doubles and integration tests. A separate versioned quality policy now evaluates normalized blur, compression, illumination and shadow scores with explainable thresholds and synthetic rule-level regression metrics; no real-world computer-vision accuracy or certification is claimed.
 
 ### Portfolio
 
@@ -71,5 +71,5 @@ The portfolio case-study site is synchronized with these verified boundaries. CI
 2. Keep the portfolio and profile synchronized with merged, verifiable work.
 3. Advance AtlasRAG from durable ingestion to hybrid retrieval/reranking and a groundedness regression dataset.
 4. Move Nexus from fixture-backed contracts to runtime-validated AtlasPay schemas and verified data endpoints.
-5. Move ForecastLab from estimator interfaces to labeled quality rules, held-out evaluation adapters and explainable inference.
+5. Move ForecastLab from synthetic quality-policy validation to held-out evaluation adapters and explainable inference.
 6. Add deployment links only after successful, verifiable deployments.
