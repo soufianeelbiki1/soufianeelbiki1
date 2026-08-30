@@ -32,7 +32,7 @@ The strict ISO 8583 message-body codec is merged to `main`, including primary/se
 
 The next switch-architecture slice is also merged: AtlasPay now has a protocol-independent canonical authorization model, explicit ISO 8583 ↔ canonical mapping for the supported purchase profile, numeric/alpha currency mapping, and response correlation using expected MTI plus the STAN/RRN pair. The mapping fails closed when required fields, field widths, processing codes, or currencies are unsupported.
 
-Next high-value slices: timeout and late-response classification, duplicate windows, reversal linkage, durable persistence/idempotency, then ledger/outbox foundations.
+The next network-behavior slice is now merged: a transport-independent coordinator makes timeout, late-response, duplicate, and mismatched-response outcomes explicit with deterministic tests. Next high-value slices: issuer/acquirer routing, reversal linkage, and expanded EMV/DE55 support.
 
 ### AtlasRAG
 
