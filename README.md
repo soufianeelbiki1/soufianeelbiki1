@@ -7,7 +7,7 @@ I use this GitHub for projects where I can test failure handling, data contracts
 ## Projects
 
 ### [AtlasPay](https://github.com/soufianeelbiki1/AtlasPay)
-Payment-processing reference system with ISO 8583/EMV boundaries, routing, timeout and reversal handling, PostgreSQL idempotency, double-entry accounting, a transactional outbox, reconciliation and operational metrics. Its Java 21/Spring Boot 3 authorization module adds validated REST, transactional PostgreSQL persistence, idempotency and outbox delivery beside the Python API.
+Payment-processing reference system with ISO 8583/EMV boundaries, routing, timeout and reversal handling, PostgreSQL idempotency, double-entry accounting, a transactional outbox, reconciliation and operational metrics. Its Java 21/Spring Boot 3 authorization module adds validated REST, transactional PostgreSQL persistence, idempotency, outbox delivery and a restartable Spring Batch reconciliation workflow beside the Python API.
 
 ### [Nexus](https://github.com/soufianeelbiki1/Nexus)
 Next.js/TypeScript operations console for AtlasPay. It validates the live API contract at runtime and shows degraded/unavailable states instead of silently replacing failed live data with fixtures.
