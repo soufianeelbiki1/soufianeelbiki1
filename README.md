@@ -1,37 +1,58 @@
 # Soufiane Elbiki
 
-Backend and full-stack engineer interested in payment systems, distributed systems, data platforms and applied AI.
+### Backend-first software engineer · Java / Spring Boot · TypeScript / React
 
-I use this GitHub for projects where I can test failure handling, data contracts and system behavior rather than only the happy path.
+I build backend services, the interfaces people use to operate them, and the data workflows that help teams make decisions.
 
-## Projects
+Based in Morocco. ENSIAS engineering graduate. Open to international remote roles and freelance projects.
 
-### [AtlasPay](https://github.com/soufianeelbiki1/AtlasPay)
-Payment-processing reference system with ISO 8583/EMV boundaries, routing, timeout and reversal handling, PostgreSQL idempotency, double-entry accounting, a transactional outbox, reconciliation and operational metrics. Its Java 21/Spring Boot 3 authorization module adds validated REST, transactional PostgreSQL persistence, idempotency, outbox delivery and a restartable Spring Batch reconciliation workflow beside the Python API.
+[Explore my work](https://soufiane-portfolio-delta.vercel.app) · [LinkedIn](https://www.linkedin.com/in/soufiane-elbiki/) · [Email](mailto:elbikisoufiane@gmail.com)
 
-### [Nexus](https://github.com/soufianeelbiki1/Nexus)
-Next.js/TypeScript operations console for AtlasPay. It validates the live API contract at runtime and shows degraded/unavailable states instead of silently replacing failed live data with fixtures.
+---
 
-### [AtlasRAG](https://github.com/soufianeelbiki1/AtlasRAG)
-FastAPI RAG backend with durable PostgreSQL ingestion, citation-aware responses, weak-evidence abstention, rank fusion, reranking hooks and regression evaluation.
+## Selected work
 
-### [ForecastLab](https://github.com/soufianeelbiki1/ForecastLab)
-Passport-photo compliance evaluation prototype with versioned rules, estimator interfaces, FastAPI signal evaluation and held-out evaluation tooling.
+### 01 / Payment operations — AtlasPay + Nexus
 
-### [AtlasAnalytics](https://github.com/soufianeelbiki1/AtlasAnalytics)
-DuckDB payments warehouse with separate payment/authorization grains, issuer and decline analysis, rolling baselines, chronological risk evaluation, calibration and PSI monitoring.
+What happens when a payment request times out, a retry arrives, or an operator needs to reconcile the ledger?
 
-### [ExperimentLab](https://github.com/soufianeelbiki1/ExperimentLab)
-A/B-testing toolkit covering SRM, treatment-effect estimation, CUPED, bootstrap intervals, power/MDE planning and rule-based ship/hold decisions.
+**AtlasPay** explores these questions through a Java 21 / Spring Boot authorization service, a Python payment API, PostgreSQL persistence, a double-entry ledger and transactional outbox delivery. **Nexus** provides the Next.js / TypeScript operations console, including explicit stale, partial and unavailable states.
 
-### [RetailIntel](https://github.com/soufianeelbiki1/RetailIntel)
-Retail warehouse and inventory analysis with margin/returns, supplier reliability, RFM/cohorts, dense SKU-day demand, forecast baselines and replenishment recommendations.
+[Backend & architecture](https://github.com/soufianeelbiki1/AtlasPay) · [Operator console](https://github.com/soufianeelbiki1/Nexus) · [Run the integrated demo](https://github.com/soufianeelbiki1/Nexus/blob/main/docs/LOCAL_DEMO.md)
 
-## Current focus
+### 02 / Inventory decisions — RetailIntel
 
-- making AtlasPay + Nexus runnable as a compact end-to-end demo;
-- improving CI/CD, security scanning and observability around the projects;
-- adding interactive dashboards to the analytics repositories;
-- keeping evaluation and performance claims tied to reproducible tests or datasets.
+Which products need attention, how much should be reordered, and how reliable are the suppliers?
 
-The [portfolio repository](https://github.com/soufianeelbiki1/portfolio) contains a visual index of the projects.
+A DuckDB retail warehouse with demand history, margin analysis, customer cohorts and transparent replenishment calculations. Includes a browser dashboard generated from reproducible synthetic data.
+
+[Repository & dashboard setup](https://github.com/soufianeelbiki1/RetailIntel)
+
+### 03 / Answers with evidence — AtlasRAG
+
+How should a retrieval system respond when its sources are incomplete?
+
+A Python retrieval backend with PostgreSQL ingestion, citation-aware responses, weak-evidence abstention and regression evaluation.
+
+[Repository & evaluation](https://github.com/soufianeelbiki1/AtlasRAG)
+
+These are personal engineering projects. Payment flows are simulated; generated datasets and evaluation limits are documented in each repository.
+
+## What I can help with
+
+- **Backend development:** Java / Spring Boot services, REST APIs, PostgreSQL and integration work.
+- **Full-stack delivery:** React / Next.js interfaces connected to backend workflows.
+- **Delivery and operations:** Docker, CI/CD, observability and failure handling.
+- **Data workflows:** SQL transformations, analytical dashboards and applied AI integrations.
+
+My professional background includes public-sector platforms and enterprise application delivery. This GitHub contains public project code and demonstrations.
+
+## Further exploration
+
+[AtlasAnalytics](https://github.com/soufianeelbiki1/AtlasAnalytics) — payments analytics and risk evaluation  
+[ExperimentLab](https://github.com/soufianeelbiki1/ExperimentLab) — experiment validity and decision tooling  
+[ForecastLab](https://github.com/soufianeelbiki1/ForecastLab) — passport-photo compliance policy evaluation
+
+## Get in touch
+
+For a remote engineering role or a freelance project, [email me](mailto:elbikisoufiane@gmail.com) with the problem, the team and the expected scope.
