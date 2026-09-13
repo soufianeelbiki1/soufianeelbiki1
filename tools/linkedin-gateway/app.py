@@ -4,7 +4,8 @@ from collections import defaultdict, deque
 from typing import Any
 
 from fastapi import FastAPI, HTTPException, Query, Request
-from mcp import Client
+from mcp import ClientSession
+from mcp.client.streamable_http import streamablehttp_client
 
 app = FastAPI(title="LinkedIn Read Gateway", version="1.0.0")
 
@@ -67,8 +68,10 @@ async def _call(tool: str, arguments: dict[str, Any]) -> Any:
     if tool not in _ALLOWED_TOOLS:
         raise HTTPException(status_code=403, detail="Tool not allowed")
     try:
-        async with Client(MCP_URL) as client:
-            result = await client.call_tool(tool, arguments)
+        async with streamablehttp_client(MCP_URL) as (read_stream, write_stream, _):
+            async with ClientSession(read_stream, write_stream) as session:
+                await session.initialize()
+                result = await session.call_tool(tool, arguments)
         return _normalize(result)
     except HTTPException:
         raise
