@@ -3,15 +3,17 @@ import time
 from collections import defaultdict, deque
 from typing import Any
 
+import httpx
 from fastapi import FastAPI, HTTPException, Query, Request
 from mcp import ClientSession
 from mcp.client.streamable_http import streamablehttp_client
 
-app = FastAPI(title="LinkedIn Read Gateway", version="1.0.0")
+app = FastAPI(title="LinkedIn Read Gateway", version="1.0.1")
 
 MCP_URL = os.environ.get("LINKEDIN_MCP_URL", "http://agent-reach-linkedin.railway.internal:8000/mcp")
 API_KEY = os.environ.get("GATEWAY_API_KEY", "")
 RATE_LIMIT_PER_MINUTE = int(os.environ.get("RATE_LIMIT_PER_MINUTE", "40"))
+MCP_HOST_HEADER = os.environ.get("LINKEDIN_MCP_HOST_HEADER", "localhost:8000")
 
 _ALLOWED_TOOLS = {
     "search_jobs",
@@ -68,10 +70,15 @@ async def _call(tool: str, arguments: dict[str, Any]) -> Any:
     if tool not in _ALLOWED_TOOLS:
         raise HTTPException(status_code=403, detail="Tool not allowed")
     try:
-        async with streamablehttp_client(MCP_URL) as (read_stream, write_stream, _):
-            async with ClientSession(read_stream, write_stream) as session:
-                await session.initialize()
-                result = await session.call_tool(tool, arguments)
+        # The LinkedIn MCP server enables MCP's DNS-rebinding protection. Railway's
+        # private service hostname is valid for routing, but it is not on the server's
+        # trusted Host allow-list, which causes HTTP 421. Keep the private connection
+        # URL while presenting the loopback Host value the MCP server explicitly trusts.
+        async with httpx.AsyncClient(headers={"Host": MCP_HOST_HEADER}) as http_client:
+            async with streamablehttp_client(MCP_URL, http_client=http_client) as (read_stream, write_stream, _):
+                async with ClientSession(read_stream, write_stream) as session:
+                    await session.initialize()
+                    result = await session.call_tool(tool, arguments)
         return _normalize(result)
     except HTTPException:
         raise
@@ -202,5 +209,3 @@ async def saved_jobs(token: str, request: Request) -> Any:
     _authorize(token)
     _rate_limit(request)
     return await _call("get_saved_jobs", {})
-
-# deployment trigger
