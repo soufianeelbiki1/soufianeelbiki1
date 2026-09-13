@@ -38,6 +38,15 @@ A Python retrieval backend with PostgreSQL ingestion, citation-aware responses, 
 
 These are personal engineering projects. Payment flows are simulated; generated datasets and evaluation limits are documented in each repository.
 
+## Inspectable engineering evidence
+
+- **Merged · applied AI:** AtlasRAG’s evaluation distinguishes grounded answers from clean abstention and includes a counterexample that catches excessive abstention. [Review the merged change](https://github.com/soufianeelbiki1/AtlasRAG/pull/11) · [42-test Python/PostgreSQL CI](https://github.com/soufianeelbiki1/AtlasRAG/actions/runs/34744313209)
+- **Ready for review · Java/Spring Boot:** AtlasPay verifies idempotent retries, payload conflicts, concurrent requests and transaction rollback against PostgreSQL. [Review the implementation and tests](https://github.com/soufianeelbiki1/AtlasPay/pull/38)
+- **Ready for review · TypeScript/platform:** Nexus locks dependencies, aligns Node 24 across CI and Docker, and tests healthy → outage → recovery without fabricated fallback data. [Review the implementation and checks](https://github.com/soufianeelbiki1/Nexus/pull/26)
+- **Draft · data product:** RetailIntel compares forecast baselines and exposes uncertainty beside the inventory queue; source tests pass, while browser QA is still open. [Review the honest work in progress](https://github.com/soufianeelbiki1/RetailIntel/pull/6)
+
+Status labels are deliberate: merged evidence is stable on `main`; review branches are not presented as published production behavior.
+
 ## What I can help with
 
 - **Backend development:** Java / Spring Boot services, REST APIs, PostgreSQL and integration work.
