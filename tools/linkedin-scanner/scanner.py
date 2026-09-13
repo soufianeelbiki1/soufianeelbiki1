@@ -1,6 +1,7 @@
 import json
 import os
 import sys
+import time
 import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
@@ -148,6 +149,7 @@ def main():
         emit("LINKEDIN_SCAN_ERROR", {"scan_at": scan_at, "kind": "saved_jobs", "error": f"{type(exc).__name__}: {exc}"})
 
     emit("LINKEDIN_SCAN_DONE", {"scan_at": scan_at, "status": "ok" if errors == 0 else "completed_with_errors", "errors": errors})
+    time.sleep(30)
     return 0 if errors == 0 else 1
 
 
