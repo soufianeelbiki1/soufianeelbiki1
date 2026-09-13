@@ -8,12 +8,13 @@ from fastapi import FastAPI, HTTPException, Query, Request
 from mcp import ClientSession
 from mcp.client.streamable_http import streamablehttp_client
 
-app = FastAPI(title="LinkedIn Read Gateway", version="1.0.1")
+app = FastAPI(title="LinkedIn Read Gateway", version="1.0.2")
 
 MCP_URL = os.environ.get("LINKEDIN_MCP_URL", "http://agent-reach-linkedin.railway.internal:8000/mcp")
 API_KEY = os.environ.get("GATEWAY_API_KEY", "")
 RATE_LIMIT_PER_MINUTE = int(os.environ.get("RATE_LIMIT_PER_MINUTE", "40"))
 MCP_HOST_HEADER = os.environ.get("LINKEDIN_MCP_HOST_HEADER", "localhost:8000")
+STARTUP_PROBE = os.environ.get("LINKEDIN_STARTUP_PROBE", "false").lower() == "true"
 
 _ALLOWED_TOOLS = {
     "search_jobs",
@@ -70,10 +71,6 @@ async def _call(tool: str, arguments: dict[str, Any]) -> Any:
     if tool not in _ALLOWED_TOOLS:
         raise HTTPException(status_code=403, detail="Tool not allowed")
     try:
-        # The LinkedIn MCP server enables MCP's DNS-rebinding protection. Railway's
-        # private service hostname is valid for routing, but it is not on the server's
-        # trusted Host allow-list, which causes HTTP 421. Keep the private connection
-        # URL while presenting the loopback Host value the MCP server explicitly trusts.
         async with httpx.AsyncClient(headers={"Host": MCP_HOST_HEADER}) as http_client:
             async with streamablehttp_client(MCP_URL, http_client=http_client) as (read_stream, write_stream, _):
                 async with ClientSession(read_stream, write_stream) as session:
@@ -84,6 +81,18 @@ async def _call(tool: str, arguments: dict[str, Any]) -> Any:
         raise
     except Exception as exc:
         raise HTTPException(status_code=502, detail=f"LinkedIn MCP error: {type(exc).__name__}: {exc}") from exc
+
+
+@app.on_event("startup")
+async def _probe_linkedin_once() -> None:
+    if not STARTUP_PROBE:
+        return
+    try:
+        result = await _call("search_jobs", {"keywords": "Java Spring Boot", "location": "Morocco", "max_pages": 1})
+        preview = str(result).replace("\n", " ")[:1200]
+        print(f"LINKEDIN_STARTUP_PROBE_OK {preview}", flush=True)
+    except Exception as exc:
+        print(f"LINKEDIN_STARTUP_PROBE_FAIL {type(exc).__name__}: {exc}", flush=True)
 
 
 @app.get("/health")
